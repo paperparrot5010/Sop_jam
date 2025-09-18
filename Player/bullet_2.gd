@@ -16,10 +16,10 @@ func _physics_process(delta: float) -> void:
 
 func _on_area_2d_body_entered(body: Node2D) -> void:
 	if body.is_in_group("EnemyGroup"):
-		var crystal = crystal_scene.instantiate()
-		#crystal.position = .position
-		body.queue_free()
-		queue_free()
+		# Call the take_damage function on the enemy
+		if body.has_method("take_damage"):
+			body.take_damage(1) # Assuming 1 damage per bullet
+		queue_free() # Destroy the bullet after hitting an enemy
 		
 	elif body.is_in_group("MachineGroup") :
 		queue_free()
