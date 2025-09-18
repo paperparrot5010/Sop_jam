@@ -1,8 +1,36 @@
-[gd_scene load_steps=2 format=3 uid="uid://bxhodc2rh8n7a"]
+[gd_scene load_steps=6 format=3 uid="uid://bxhodc2rh8n7a"]
 
+[ext_resource type="Texture2D" uid="uid://b1cxpkx0i0f55" path="res://icon.svg" id="1_b8pmt"]
 [ext_resource type="PackedScene" uid="uid://okmrywtn40ld" path="res://Player/player.tscn" id="2_p4uik"]
+[ext_resource type="PackedScene" uid="uid://b0bc4nfc0uumy" path="res://Enemy/enemy.tscn" id="3_p4uik"]
+
+[sub_resource type="NavigationPolygon" id="NavigationPolygon_sd6jy"]
+vertices = PackedVector2Array(687.773, 368.727, 1132.64, 362.219, 1139.27, 362.133, 1146.71, 630.031, 9.92969, 633.961, 418.328, 372.672, 6.0625, -1.96094, 416.891, 143.508, 443.57, 146, 1138.85, 1.96094, 682.781, 150.172, 1134.12, 342.508, 1131.99, 342.633)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3, 4, 5), PackedInt32Array(5, 4, 6, 7), PackedInt32Array(8, 7, 6, 9, 10), PackedInt32Array(10, 9, 11, 12, 0), PackedInt32Array(0, 12, 1)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(109, 42, 415, 1, 426, 1, 430, 636, 396, 363, 1149, 352, 1157, 640, 0, 644, -4, -12, 1149, -8, 1144, 352, 678, 379, 673, 160, 443, 156, 121, 126)])
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ewnu2"]
+size = Vector2(214, 185)
 
 [node name="Main" type="Node2D"]
 
 [node name="Player" parent="." instance=ExtResource("2_p4uik")]
-position = Vector2(498, 157)
+position = Vector2(1006, 590)
+
+[node name="NavigationRegion2D" type="NavigationRegion2D" parent="."]
+visible = false
+navigation_polygon = SubResource("NavigationPolygon_sd6jy")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="." groups=["MachineGroup"]]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(553, 262.5)
+shape = SubResource("RectangleShape2D_ewnu2")
+
+[node name="Sprite2D" type="Sprite2D" parent="StaticBody2D"]
+position = Vector2(556, 262)
+scale = Vector2(1.76563, 1.53906)
+texture = ExtResource("1_b8pmt")
+
+[node name="Enemy" parent="." instance=ExtResource("3_p4uik")]
+position = Vector2(138, 189)
