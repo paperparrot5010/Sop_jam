@@ -1,8 +1,18 @@
 extends CharacterBody2D
 var bullet_path = preload("res://Player/bullet2.tscn")
 var speed = 200
+
 @onready var animated_sprite_2d: AnimatedSprite2D = $AnimatedSprite2D
 
+# Animation variables
+var original_scale = Vector2(0.087, 0.087) # Assuming this is the original scale
+var idle_animation_speed = 1.0 # Speed of the squish/stretch animation when idle
+var moving_animation_speed = 5.0 # Speed of the squish/stretch animation when moving
+var current_animation_time = 0.0
+var animation_duration = 1.0 # Duration of one full squish/stretch cycle
+
+func _ready():
+	animated_sprite_2d.scale = original_scale
 
 func _physics_process(delta: float) -> void:
 
@@ -26,19 +36,29 @@ func _physics_process(delta: float) -> void:
 
 	velocity = input_direction.normalized() * speed
 	move_and_slide()
-	if animated_sprite_2d.scale.x == 0.087 :
-		animated_sprite_2d.scale.x = move_toward(0.087,0.051, 3 * delta)
 
-	if animated_sprite_2d.scale.y == 0.087 :
-		animated_sprite_2d.scale.y = move_toward(0.087,0.091, 3 * delta)
+	# Squish and stretch animation logic
+	if velocity.length() == 0: # Only animate when idle
+		current_animation_time += delta * idle_animation_speed
+		var t = fmod(current_animation_time, animation_duration) / animation_duration
 
-	if animated_sprite_2d.scale.y == 0.091 :
-		animated_sprite_2d.scale.y = move_toward(0.091,0.087, 3 * delta)
-	if animated_sprite_2d.scale.x == 0.091 :
-		animated_sprite_2d.scale.x = move_toward(0.091,0.087, 3 * delta)
+		# Simple sine wave for squish and stretch
+		var scale_x_factor = 1.0 + sin(t * PI * 2) * 0.05 # Adjusted for smaller intensity
+		var scale_y_factor = 1.0 - sin(t * PI * 2) * 0.05 # Adjusted for smaller intensity
 
+		animated_sprite_2d.scale.x = original_scale.x * scale_x_factor
+		animated_sprite_2d.scale.y = original_scale.y * scale_y_factor
+	else:
+		# Animate faster when moving
+		current_animation_time += delta * moving_animation_speed
+		var t = fmod(current_animation_time, animation_duration) / animation_duration
 
+		# Simple sine wave for squish and stretch (can be adjusted for moving animation)
+		var target_scale_x = original_scale.x * (1.0 + sin(t * PI * 2) * 0.05)
+		var target_scale_y = original_scale.y * (1.0 - sin(t * PI * 2) * 0.05)
+		var target_scale = Vector2(target_scale_x, target_scale_y)
 
+		animated_sprite_2d.scale = animated_sprite_2d.scale.lerp(target_scale, 0.5)
 
 
 func fire():
