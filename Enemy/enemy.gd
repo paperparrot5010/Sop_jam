@@ -3,6 +3,7 @@ extends CharacterBody2D
 @export var speed = 100.0
 @export var health = 1 # Example health
 @onready var navigation_agent: NavigationAgent2D = $NavigationAgent2D
+@onready var animated_sprite_2d: AnimatedSprite2D = $AnimatedSprite2D
 
 var player_node: Node2D = null
 var crystal_scene = preload("res://Collectabel objects/crystal.tscn")
@@ -19,6 +20,8 @@ func _ready():
 	navigation_agent.target_desired_distance = 4.0
 
 func _physics_process(delta: float) -> void:
+	animated_sprite_2d.play("Run")
+	
 	if player_node == null:
 		return
 

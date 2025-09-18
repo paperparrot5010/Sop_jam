@@ -10,6 +10,7 @@ func _ready() -> void:
 	global_rotation = rota
 	
 func _physics_process(delta: float) -> void:
+	look_at(get_global_mouse_position())
 	velocity = Vector2(speed,0).rotated(dir)
 	move_and_slide()
 
