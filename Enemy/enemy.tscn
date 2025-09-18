@@ -4,7 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://bypu5ku7t3x0g" path="res://Enemy/slime-Sheet.png" id="2_px1sc"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_eqilm"]
-size = Vector2(34, 20)
+size = Vector2(23, 14)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_am0pq"]
 atlas = ExtResource("2_px1sc")
@@ -46,8 +46,8 @@ animations = [{
 script = ExtResource("1_px1sc")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(-0.5, 6)
-scale = Vector2(0.5, 0.5)
+position = Vector2(-1.5, 10)
+scale = Vector2(3, 3)
 shape = SubResource("RectangleShape2D_eqilm")
 
 [node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
@@ -55,6 +55,8 @@ path_desired_distance = 3.0
 target_desired_distance = 3.0
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(0, -3)
+scale = Vector2(3, 3)
 sprite_frames = SubResource("SpriteFrames_glvfu")
 animation = &"Run"
-frame_progress = 0.946999
+frame_progress = 0.925357

@@ -3,7 +3,7 @@ extends Area2D
 @onready var float_animation_player: AnimationPlayer = $Float_AnimationPlayer
 
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	shine_animation_player.play("ShineAnimation")
 	float_animation_player.play("FloatAnimation")
 	pass

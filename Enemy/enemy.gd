@@ -19,8 +19,13 @@ func _ready():
 	navigation_agent.path_desired_distance = 4.0
 	navigation_agent.target_desired_distance = 4.0
 
-func _physics_process(delta: float) -> void:
+func _physics_process(_delta: float) -> void:
 	animated_sprite_2d.play("Run")
+
+	if player_node.global_position.x < global_position.x:
+		animated_sprite_2d.flip_h = false
+	else:
+		animated_sprite_2d.flip_h = true
 	
 	if player_node == null:
 		return
